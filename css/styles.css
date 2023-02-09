@@ -1,0 +1,19 @@
+.container {
+  width: calc(100vw - 100px);
+  margin: 0 auto;
+}
+
+.button-container {
+  text-align: left;
+}
+
+.text-input {
+  width: 100%;
+  height: calc(100vh - 200px);
+  background-color: #F9FBFF;
+}
+
+.copyright {
+  font-size: 80%;
+  padding: 25px 0;
+}

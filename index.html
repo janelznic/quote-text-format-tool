@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="author" content="Jan Elznic">
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <script src="/js/bootstrap.bundle.min.js"></script>
+  <link href="/css/styles.css" rel="stylesheet">
+  <title>Quote text format tool</title>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>Quote text format tool</h1>
+
+  <form id="tool_form">
+    <textarea class="form-control text-input" id="txt_field"></textarea>
+    <br>
+
+    <div class="button-container">
+      <button type="button" class="btn btn-lg btn-warning" id="magic_button">Format from &#128203;</button>
+      <button type="button" class="btn btn-primary" id="copy_button">Copy to clipboard</button>
+      <button type="button" class="btn btn-primary" id="submit_button">Quote text</button>
+      <button type="button" class="btn btn-primary" id="clear-whitespace_button">Clear whitespaces</button>
+      <button type="button" class="btn btn-danger" id="reset_button">Reset</button>
+    </div>
+  </form>
+
+  <p class="copyright">&copy; 2023 Jan Elznic - <a target="_blank" href="https://janelznic.cz">https://janelznic.cz</a></p>
+</div>
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="toast" class="toast text-bg-success" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-body" id="toast_message"></div>
+  </div>
+</div>
+
+<script>
+  const elm = document.getElementById('txt_field');
+
+  const showToastFunc = (messageText) => {
+    const toastMessageElm = document.getElementById('toast_message');
+    toastMessageElm.innerHTML = messageText;
+
+    const toast = new bootstrap.Toast(document.getElementById('toast'), { delay: 1500 });
+    toast.show();
+  };
+
+  const resetFormFunc = () => {
+    // document.getElementById('tool_form').reset();
+    elm.value = '';
+  };
+
+  const quoteTextFunc = () => {
+    const lines = elm.value.split('\n');
+    let content = '';
+    for (var i=0; i < lines.length; i++){
+      content += '> ' + lines[i] + '\n';
+    }
+    elm.value = content;
+  };
+
+  const clearWhiteSpacesFunc = () => {
+    elm.value = elm.value.split(/\r?\n/).filter(line => line.trim() !== '').join('\n\n');
+  };
+
+  const copyToClipboardFunc = () => {
+    navigator.clipboard.writeText(elm.value).then(() => {
+      showToastFunc('Copied to clipboard!');
+    });
+  };
+
+  const pasteFromClipboardFunc = async () => {
+    await navigator.clipboard.readText().then(text => (elm.value = text));
+  };
+
+  const magicFunc = async () => {
+    resetFormFunc();
+    await pasteFromClipboardFunc();
+    clearWhiteSpacesFunc();
+    quoteTextFunc();
+    copyToClipboardFunc();
+  };
+
+  document.getElementById('submit_button').addEventListener('click', quoteTextFunc);
+  document.getElementById('reset_button').addEventListener('click', resetFormFunc);
+  document.getElementById('clear-whitespace_button').addEventListener('click', clearWhiteSpacesFunc);
+  document.getElementById('copy_button').addEventListener('click', copyToClipboardFunc);
+  document.getElementById('magic_button').addEventListener('click', magicFunc);
+
+  window.addEventListener('load', () => {
+    elm.focus();
+  });
+</script>
+
+</body>
+</html>
