@@ -1,0 +1,26 @@
+{
+  "name": "quote-text-format-tool",
+  "version": "1.0.0",
+  "description": "Formats the text by removing whitespaces and lines, adding a quotation mark and copying it to the clipboard.",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server -p 8080 -a 0.0.0.0 ./",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/janelznic/quote-text-format-tool.git"
+  },
+  "keywords": [
+    "quote"
+  ],
+  "author": "Jan Elznic",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/janelznic/quote-text-format-tool/issues"
+  },
+  "homepage": "https://github.com/janelznic/quote-text-format-tool#readme",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
